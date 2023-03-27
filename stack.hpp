@@ -56,12 +56,17 @@ StackArray<T>::StackArray(int size) :
 	top_(0),
 	arr_(nullptr)
 {
-	if (size_ <= 0) {
+	if (size_  == 0) {  // std::size_t is always positive or 0
 		throw WrongStackSize();
 	}
 	else {
+              try
+              {
 		arr_ = new T[size_];
-	}
+	     } catch (std::bad_alloc) // to large size, not enough memory, standard exception occurs
+	     {
+                throw WrongStackSize(); // throw our custom exception
+	     }
 }
 
 template<typename T>
